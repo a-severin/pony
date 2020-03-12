@@ -11,5 +11,9 @@
     <None Remove="_ReSharper.Caches\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="pony.sln.DotSettings" />
+  </ItemGroup>
+
 
 </Project>
