@@ -16,5 +16,11 @@ namespace pony.Tests
         {
             Assert.True(3 + 3 == 6);
         }
+
+        [Fact]
+        public void Test3()
+        {
+            Assert.True(4 + 4 == 8);
+        }
     }
 }
