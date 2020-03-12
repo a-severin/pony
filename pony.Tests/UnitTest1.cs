@@ -10,5 +10,11 @@ namespace pony.Tests
         {
             Assert.True(2 + 2 == 4);
         }
+
+        [Fact]
+        public void Test2()
+        {
+            Assert.True(3 + 3 == 6);
+        }
     }
 }
