@@ -1,0 +1,30 @@
+GET https://localhost:5001/
+
+###
+
+PUT https://localhost:5001/
+Content-Type: application/json
+
+{"msg":"hello pony"}
+
+###
+
+GET https://localhost:5001/materials
+
+###
+
+PUT https://localhost:5001/materials
+Content-Type: application/json
+
+{"id":1,"name":"steel","standart":"GOST-17001-98"}
+
+###
+
+GET https://localhost:5001/form
+
+###
+
+PUT https://localhost:5001/form
+Content-Type: application/json
+
+{"id":1,"name":"bold","standart":"GOST-12345-2004"}
