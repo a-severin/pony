@@ -1,14 +1,3 @@
-GET https://localhost:5001/
-
-###
-
-PUT https://localhost:5001/
-Content-Type: application/json
-
-{"msg":"hello pony"}
-
-###
-
 GET https://localhost:5001/materials
 
 ###
@@ -28,3 +17,26 @@ PUT https://localhost:5001/form
 Content-Type: application/json
 
 {"id":1,"name":"bold","standart":"GOST-12345-2004"}
+
+###
+
+POST https://localhost:5001/form
+Content-Type: application/json
+
+{
+"_id": "5e6df59ea8757c0d1518b04c",
+"id": 1,
+"name": "tiny",
+"standart": "GOST-54321-2004"
+}
+
+###
+DELETE https://localhost:5001/form
+Content-Type: application/json
+
+{
+"_id": "5e6b8cde5f20aa1287ead809",
+"id": 1,
+"name": "bold",
+"standart": "GOST-12345-2004"
+}

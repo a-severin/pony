@@ -7,7 +7,9 @@ namespace pony.Storage
 {
     public interface IPonyStorage : IDisposable
     {
+        Task<bool> DeleteAsync(string requestPath, Stream stream);
         Task<JArray> ReadAsync(string requestPath);
-        Task StoreAsync(string requestPath, Stream stream);
+        Task<JObject> StoreAsync(string requestPath, Stream stream);
+        Task<bool> UpdateAsync(string requestPath, Stream stream);
     }
 }

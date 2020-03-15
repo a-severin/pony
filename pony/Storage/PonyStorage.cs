@@ -20,19 +20,35 @@ namespace pony.Storage
         {
         }
 
-        public async Task StoreAsync(string requestPath, Stream stream)
+        public async Task<JObject> StoreAsync(string requestPath, Stream stream)
         {
             var collection = _getCollection(requestPath);
             using var reader = new StreamReader(stream, Encoding.UTF8);
             var jsonString = await reader.ReadToEndAsync();
-            await Task.Run(() => PonyWriteEntity.Parse(jsonString).Save(collection));
+            var bsonDocument = await Task.Run(() => PonyWriteEntity.Parse(jsonString).Save(collection));
+            return bsonDocument.ToJson();
         }
 
+        public async Task<bool> DeleteAsync(string requestPath, Stream stream)
+        {
+            var collection = _getCollection(requestPath);
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+            var jsonString = await reader.ReadToEndAsync();
+            return await Task.Run(() => PonyWriteEntity.Parse(jsonString).Delete(collection));
+        }
 
         public async Task<JArray> ReadAsync(string requestPath)
         {
             var collection = _getCollection(requestPath);
             return await Task.Run(() => PonyReadEntity.Parse(requestPath).Read(collection));
+        }
+
+        public async Task<bool> UpdateAsync(string requestPath, Stream stream)
+        {
+            var collection = _getCollection(requestPath);
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+            var jsonString = await reader.ReadToEndAsync();
+            return await Task.Run(() => PonyWriteEntity.Parse(jsonString).Update(collection));
         }
 
         public void Dispose()

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LiteDB;
 using Newtonsoft.Json.Linq;
 
@@ -16,6 +13,8 @@ namespace pony.Storage
             _bsonDocument = bsonDocument;
         }
 
+        public BsonValue this[string key] => _bsonDocument[key];
+
         public static PonyWriteEntity Parse(string text)
         {
             var bsonDocument = new BsonDocument {["_id"] = ObjectId.NewObjectId()};
@@ -23,31 +22,33 @@ namespace pony.Storage
             var json = JObject.Parse(text);
             foreach (var (key, value) in json)
             {
-                switch (value.Type)
+                if (key.Equals("_id", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    case JTokenType.String:
-                        bsonDocument[key] = new BsonValue(value.Value<string>());
-                        break;
-                    case JTokenType.Boolean:
-                        bsonDocument[key] = new BsonValue(value.Value<bool>());
-                        break;
-                    case JTokenType.Integer:
-                        bsonDocument[key] = new BsonValue(value.Value<long>());
-                        break;
-                    case JTokenType.Float:
-                        bsonDocument[key] = new BsonValue(value.Value<double>());
-                        break;
+                    bsonDocument["_id"] = new ObjectId(value.Value<string>());
+                    continue;
                 }
+
+                bsonDocument.Set(key, value);
             }
 
             return new PonyWriteEntity(bsonDocument);
         }
 
-        public void Save(ILiteCollection<BsonDocument> collection)
+        public BsonDocument Save(ILiteCollection<BsonDocument> collection)
         {
-            collection.Insert(_bsonDocument);
+            var id = collection.Insert(_bsonDocument);
+            _bsonDocument["_id"] = id;
+            return _bsonDocument;
         }
 
-        public BsonValue this[string key] => _bsonDocument[key];
+        public bool Delete(ILiteCollection<BsonDocument> collection)
+        {
+            return collection.Delete(_bsonDocument["_id"]);
+        }
+
+        public bool Update(ILiteCollection<BsonDocument> collection)
+        {
+            return collection.Update(_bsonDocument);
+        }
     }
 }

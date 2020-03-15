@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="database-log.db" />
+    <None Remove="database.db" />
     <None Remove="pony.sln.DotSettings" />
   </ItemGroup>
 
