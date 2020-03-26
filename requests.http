@@ -40,3 +40,33 @@ Content-Type: application/json
 "name": "bold",
 "standart": "GOST-12345-2004"
 }
+
+
+###
+PUT https://localhost:5001/users
+Content-Type: application/json
+
+{"name":"Felix","Role":"Developer"}
+
+###
+GET https://localhost:5001/users
+
+###
+POST https://localhost:5001/users
+Content-Type: application/json
+
+{
+"_id": "5e7d0a0b895eb101caf16c49",
+"name": "Felix",
+"Role": "Manager"
+}
+
+### 
+DELETE https://localhost:5001/users
+Content-Type: application/json
+
+{
+"_id": "5e7d0a0b895eb101caf16c49",
+"name": "Felix",
+"Role": "Manager"
+}
